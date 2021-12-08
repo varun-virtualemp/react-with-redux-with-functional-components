@@ -9,17 +9,17 @@ NPM
 # Installation:-
 After you clone this project, do the following:
 
-##### setup backend first
+##### Setup Backend First
 Setup the api project first to get the credentials so that the project may work on your local machine
-```#repo link https://github.com/varun-virtualemp/node-with-mongo```
+- (https://github.com/varun-virtualemp/node-with-mongo)
 
-##### install npm dependencies
+##### Install NPM Dependencies
 ```npm install```
 
-##### update the below url as per your local url in the src/axios/baseURL file
+##### Update the below url as per your local url in the src/axios/baseURL file
 ```localApiUrl = "http://your_local_url/" ```
 
-##### run local server and watch for changes
+##### Run Local Server and Watch for changes
 ```npm start```
 
 # Default Credentials:-
