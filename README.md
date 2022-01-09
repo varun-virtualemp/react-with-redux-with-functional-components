@@ -15,8 +15,11 @@ Setup the api project first to get the credentials so that the project may work 
 ##### Install NPM Dependencies
 ```npm install```
 
-##### Update the below url as per your local url in the src/axios/baseURL file
-```localApiUrl = "http://your_local_url/" ```
+##### create a .env file
+```cp .env-example .env.local```
+
+##### Update the below url as per your backend local url in the .env.local file
+```REACT_APP_BACKEND_URL = "http://your_backend_local_url/" ```
 
 ##### Run Local Server and Watch for changes
 ```npm start```

@@ -30,7 +30,7 @@ const UserForm = (props) => {
 
 
     /**section to be executed when we open the form in edit mode */
-    if(typeof userData != "undefined")
+    if(typeof userData != "undefined" && (_.size(userData) > 0))
         if (_.size(userData.user) !== _.size(fields))
             setFields({...userData.user})
     /**end of section to be executed when we open the form in edit mode */

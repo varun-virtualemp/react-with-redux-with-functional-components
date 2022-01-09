@@ -4,8 +4,6 @@ import _ from 'lodash';
 import toastr from 'toastr';
 import 'toastr/build/toastr.min.css';
 
-import baseUrl from '../axios/baseURL';
-
 /* called when needed to redirect user to login screen*/
 const loginRedirect = () => {
     localStorage.clear();
@@ -79,7 +77,7 @@ const requestTokenHeader = () => {
 const history = createBrowserHistory();
 
 /* returns base url */
-const API_URL = baseUrl;
+const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 
 export {
