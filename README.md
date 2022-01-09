@@ -29,3 +29,6 @@ Setup the api project first to get the credentials so that the project may work 
 email:- testing@gmail.com
 password:- 123456
 ```
+
+# DEMO URL
+```http://3.108.55.61/```
