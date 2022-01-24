@@ -8,7 +8,7 @@ export const fetchUserData = (params) => {
         try {
             const response = await api.get('user',{
                 params  : params,
-                headers : requestTokenHeader(),
+                //headers : requestTokenHeader(),
             });
             if (response.data.success) {
                 dispatch({ type : 'USER_LIST_SUCCESS', payload : response.data.data});
@@ -26,7 +26,7 @@ export const deleteUser = (id) => {
         dispatch({ type: 'DELETE_USER_REQUEST' });
         try {
             const response = await api.delete('user/'+id, {
-                headers : requestTokenHeader(),
+                //headers : requestTokenHeader(),
             });
     
             if (response.data.success) {
@@ -47,7 +47,7 @@ export const fetchUserEditFormDependantData = (id) => {
         dispatch({ type: 'FETCH_USER_EDIT_FORM_REQUEST' });
         try {
             const response = await api.get(`user/${id}`,{
-                headers : requestTokenHeader(),
+                //headers : requestTokenHeader(),
             });
             
             if (response.data.success) {
@@ -68,11 +68,11 @@ export const submitUserFormData = (id,postData) => {
             let response = '';
             if(id)
                 response = await api.put(`user/${id}`, postData,{ 
-                    headers : requestTokenHeader()
+                    //headers : requestTokenHeader()
                 });
             else
                 response = await api.post(`user`, postData,{
-                    headers : requestTokenHeader(),
+                    //headers : requestTokenHeader(),
                 });
             
             if (response.data.success) {
