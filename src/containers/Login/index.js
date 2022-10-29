@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import LoginStyle from './style';
 import {login} from '../../actions/Login'
-import BlockUI from "../../components/BlockUI";
+import { Loader} from "../../components";
 
 const Login = (props) => {
     const [fields, setFields] = useState({});
@@ -65,7 +65,7 @@ const Login = (props) => {
     
     return(
         <Fragment>
-            <BlockUI blocking={blocking} />
+            <Loader blocking={blocking} />
             <LoginStyle>
                 <div className="background-design">
                     <div id="logreg-forms">

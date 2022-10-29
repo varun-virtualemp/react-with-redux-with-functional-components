@@ -15,7 +15,7 @@ function App() {
 
     return (
         <Provider store={store}><MainRoute /> </Provider>
-    );
+    )
 }
 
 export default App;

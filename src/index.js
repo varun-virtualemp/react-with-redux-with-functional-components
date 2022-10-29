@@ -2,11 +2,11 @@ import React, { Suspense} from 'react';
 import ReactDOM from 'react-dom';
 
 import App from './App';
-import BlockUI from './components/BlockUI';
+import { Loader } from './components';
 
 ReactDOM.render(
     <React.StrictMode>
-        <Suspense fallback={<BlockUI blocking={true} />}>
+        <Suspense fallback={<Loader blocking={true} />}>
             <App />
         </Suspense>
     </React.StrictMode>,

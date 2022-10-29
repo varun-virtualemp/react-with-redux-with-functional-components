@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import _ from 'lodash'
 
-import BlockUI from "../../components/BlockUI"
+import { Loader } from "../../components"
 import {history} from '../../utils/helper'
 import validateUserForm from './UserFormValidation'
 import { fetchUserEditFormDependantData, submitUserFormData, resetUserData} from '../../actions/User'
@@ -83,7 +83,7 @@ const UserForm = (props) => {
 
     return (
         <Fragment>
-            <BlockUI blocking={blocking} />
+            <Loader blocking={blocking} />
             <h1 className="display-4 d-none d-sm-block">
                 User Details
             </h1>
