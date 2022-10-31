@@ -3,9 +3,9 @@ import { useDispatch } from 'react-redux'
 
 import HeaderStyle from './style'
 import {loginRedirect} from '../../../utils/helper'
-import { resetLoggedUserData } from '../../../actions/Login'
+import { resetLoggedUserData } from '../../../containers/Login/store'
 
-const Header = (props) => {
+const Header = () => {
     const dispatch = useDispatch();
     
     /**method to call action and redirect to home page */

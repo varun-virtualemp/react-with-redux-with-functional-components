@@ -5,9 +5,15 @@ import PrivateRoute from './PrivateRoute';
 import MainLayout from '../pages/MainLayout';
 import NotFound from '../pages/NotFound/index';
 import {history} from '../utils/helper'
-const Login = lazy(() => import('../containers/Login'))
-const User = lazy(() => import('../containers/User/UserList'))
-const UserForm = lazy(() => import('../containers/User/UserForm'))
+const Login = lazy(
+    () => import('../containers/Login/view').then(module => ({ default: module.Login }))
+)
+const User = lazy(
+    () => import('../containers/User').then(module => ({ default: module.UserList }))
+)
+const UserForm = lazy(
+    () => import('../containers/User').then(module => ({ default: module.UserForm }))
+)
 const Dashboard = lazy(() => import('../containers/Dashboard'))
 
 function MainRoute() {
