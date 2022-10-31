@@ -2,22 +2,22 @@ import React, { Fragment, useState, useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 
 import LoginStyle from './style';
-import {login} from '../../actions/Login'
-import BlockUI from "../../components/BlockUI";
+import {login} from '../store'
+import { Loader} from "../../../components";
 
-const Login = (props) => {
-    const [fields, setFields] = useState({});
-    const [errors, setErrors] = useState({});
-    const [location, setLocation] = useState({});
+export const Login = (props) => {
+    const [fields, setFields] = useState({})
+    const [errors, setErrors] = useState({})
+    const [location, setLocation] = useState({})
 
     /**fetched data from redux store */
-    const loggedUser = useSelector(state => state.authenticatedUser);
-    const dispatch = useDispatch();
+    const loggedUser = useSelector(state => state.authenticatedUser)
+    const dispatch = useDispatch()
 
     /**hook equivalent to componentdidmount lifecycle */
     useEffect(() => {
-        setLocation({...props});
-    }, []);// eslint-disable-line react-hooks/exhaustive-deps
+        setLocation({...props})
+    }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
     /* validate form */
     const _validateForm = () => {
@@ -36,21 +36,21 @@ const Login = (props) => {
         }
 
         setErrors(errors)
-        return formIsValid;
+        return formIsValid
     }
 
     /* handle input field changes */
     const _handleChange = (event) => {
-        let field = fields;
-        field[event.target.name] = event.target.value;
+        let field = fields
+        field[event.target.name] = event.target.value
         setFields(field)
     }
 
     /* submit form */
     const handleSubmit = (event) => {
-        event.preventDefault();
+        event.preventDefault()
         if(_validateForm()) {
-            const { email, password } = event.target;
+            const { email, password } = event.target
             const userData = {
                 email       : email.value,
                 password    : password.value
@@ -65,7 +65,7 @@ const Login = (props) => {
     
     return(
         <Fragment>
-            <BlockUI blocking={blocking} />
+            <Loader blocking={blocking} />
             <LoginStyle>
                 <div className="background-design">
                     <div id="logreg-forms">
@@ -96,5 +96,3 @@ const Login = (props) => {
         </Fragment>
     )
 }
-
-export default Login;

@@ -1,18 +1,19 @@
-import React from "react";
+import React from "react"
+import { useSelector } from "react-redux"
 
-import BlockStyle from './style';
+import BlockStyle from './style'
 
-const BlockUI = props => {
-    if (!props.blocking) {
-        return "";
-    } else {
-        return (
+export const Loader = ({title}) => {
+    const {blocking} = useSelector(state => state.globalState)
+
+    return (
+        blocking ? 
             <BlockStyle>
                 <div className="block-ui-container">
                     <div className="block-ui-overlay" />
                     <div className="block-ui-message-container">
                         <div className="block-ui-message">
-                            <h4>{props.title}</h4>
+                            <h4>{title}</h4>
                             <div className="loading-indicator">
                                 <svg id="indicator" viewBox="0 0 100 100">
                                     <circle id="circle" cx="50" cy="50" r="45" />
@@ -21,14 +22,11 @@ const BlockUI = props => {
                         </div>
                     </div>
                 </div>
-            </BlockStyle>
-        )
-    }
+            </BlockStyle>    
+        : ''
+    )
 }
 
-BlockUI.defaultProps = {
-    blocking: false,
+Loader.defaultProps = {
     title: "Loading, Please wait"
-};
-
-export default BlockUI;
+}

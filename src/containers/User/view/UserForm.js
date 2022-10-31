@@ -2,12 +2,12 @@ import React, { useState, useEffect, Fragment } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import _ from 'lodash'
 
-import BlockUI from "../../components/BlockUI"
-import {history} from '../../utils/helper'
+import { Loader } from "../../../components"
+import {history} from '../../../utils/helper'
 import validateUserForm from './UserFormValidation'
-import { fetchUserEditFormDependantData, submitUserFormData, resetUserData} from '../../actions/User'
+import { fetchUserEditFormDependantData, submitUserFormData, resetUserData} from '../store'
 
-const UserForm = (props) => {
+export const UserForm = (props) => {
     const currentId = props?.match?.params?.id;
     const [fields, setFields] = useState({});
     const [errors, setErrors] = useState({});
@@ -83,7 +83,7 @@ const UserForm = (props) => {
 
     return (
         <Fragment>
-            <BlockUI blocking={blocking} />
+            <Loader blocking={blocking} />
             <h1 className="display-4 d-none d-sm-block">
                 User Details
             </h1>
@@ -164,5 +164,3 @@ const UserForm = (props) => {
         </Fragment>
     )
 }
-
-export default UserForm

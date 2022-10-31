@@ -1,33 +1,31 @@
 import React, { Fragment, useState, useEffect } from "react"
 import { useSelector, useDispatch } from 'react-redux'
-import { NavLink } from "react-router-dom"
 import Pagination from "react-js-pagination"
 import _ from 'lodash'
 
-import BlockUI from "../../components/BlockUI"
-import SearchBox from "../../components/Search/SearchBox"
-import { fetchUserData, resetUserData, deleteUser } from "../../actions/User"
-import { displayRecordNotFound } from '../../utils/helper'
-import Modal from '../../components/ConfirmationModal/Modal'
+import {Loader, SearchBox, Modal, Table, DeleteButton, EditButton} from "../../../components"
+import { fetchUserData, resetUserData, deleteUser } from "../store"
+import { displayRecordNotFound } from '../../../utils/helper'
+import { RedirectButton } from "../../../components/Buttons"
 
-const UserList = (props) => {
-    const [searchTitle, setSearchTitle] = useState('');
-    const [showModal, setShowModal] = useState(false);
-    const [selectedRowId, setSelectedRowId] = useState('');
+export const UserList = () => {
+    const [searchTitle, setSearchTitle] = useState('')
+    const [showModal, setShowModal] = useState(false)
+    const [selectedRowId, setSelectedRowId] = useState('')
 
     /**fetched data from redux store */
-    const users = useSelector(state => state.user);
-    const dispatch = useDispatch();
+    const users = useSelector(state => state.user)
+    const dispatch = useDispatch()
 
     /**hook equivalent to componentdidmount lifecycle */
     useEffect(() => {
-        _getData();
+        _getData()
 
         // returned function will be called on component unmount 
         return () => {
             dispatch(resetUserData())
         }
-    }, [searchTitle]);// eslint-disable-line react-hooks/exhaustive-deps
+    }, [searchTitle])// eslint-disable-line react-hooks/exhaustive-deps
 
     
     /**method to call the configure the data and call the action */
@@ -36,7 +34,7 @@ const UserList = (props) => {
             page    : data ? data : 1,
             search  : searchTitle
         }
-        dispatch(fetchUserData(params));
+        dispatch(fetchUserData(params))
     }
 
     /**method for calling api based on page change  */
@@ -46,51 +44,27 @@ const UserList = (props) => {
     const _handleSearchInputChange = (value) => setSearchTitle(value)
 
     /* build user list */
-    const _userList = users => {
-        if (!_.isEmpty(users)) {
+    const _userListContent = () => {
+        if(_.size(userList) > 0)
             return (
-                <table className="table table-bordered table-striped table-hover">
-                    <thead>
-                        <tr role="row">
-                            <th>Username</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {users.map((data, index) => (
-                            <tr key={index} role="row" className={index % 2 === 0 ? "even" : "odd"}>
-                                <td>{data.username}</td>
-                                <td>{data.first_name}</td>
-                                <td>{data.last_name}</td>
-                                <td>{data.email}</td>
-                                <td className="actions">
-                                    <NavLink to={`/user/edit/${data.id}`} className="ms-2" title="Edit">
-                                        <i className="fa fa-pencil" aria-hidden="true"></i>
-                                    </NavLink>
-                                    {/* eslint-disable-next-line */}
-                                    <a className="delete" title="Delete" className="ms-2" style={{'cursor':'pointer'}}
-                                        onClick={(event) => _handleModalShowClick(event,index)}>
-                                        <i className="fa fa-trash" aria-hidden="true"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>                
+                userList.map((data, index) => (
+                    <tr key={index} role="row" className={index % 2 === 0 ? "even" : "odd"}>
+                        <td>{data.username}</td>
+                        <td>{data.first_name}</td>
+                        <td>{data.last_name}</td>
+                        <td>{data.email}</td>
+                        <td className="actions">
+                            <EditButton urlToBeNavigated={`/user/edit/${data.id}`} />
+                            <DeleteButton handleClick={(event) => _handleModalShowClick(event, index)} />
+                        </td>
+                    </tr>
+                ))
             )
-        } else if (_.isEmpty(users)) {
-            return (
-                displayRecordNotFound('No User Records Found')
-            )
-        }
     }
 
     /*method called to display modal*/
-    function _handleModalShowClick(e,i){
-        e.preventDefault();
+    const _handleModalShowClick = (e,i) => {
+        e.preventDefault()
         setShowModal(true)
         setSelectedRowId(users.userList[i].id)
     }
@@ -108,6 +82,8 @@ const UserList = (props) => {
         }
     }
 
+    const tableHeaders = ['Username', 'First Name', 'Last Name', 'Email', 'Actions']
+
     const {totalRecords, per_page , blocking, userList, currentPage } = users;
     let total = 0;
     if(typeof totalRecords != 'undefined')
@@ -115,14 +91,14 @@ const UserList = (props) => {
     
     return (
         <Fragment>
-            <BlockUI blocking={blocking} />
+            <Loader blocking={blocking} />
             <h3>User List</h3>
 
             <div className="row clearfix">
                 <div className="col-lg-12">
                     <div className="row">
                         <div className="col-xs-12 col-sm-12 col-md-2 col-lg-2 mb-2">
-                            <NavLink to={'/user/create'} className="btn btn-primary">Create User</NavLink>
+                            <RedirectButton urlToBeNavigated={'/user/create'} text={'Create User'} />
                         </div>
                     
                         <SearchBox searchParentClass="col-xs-12 col-sm-12 col-md-3 col-lg-3 mb-2 offset-lg-7 offset-md-7"
@@ -134,7 +110,17 @@ const UserList = (props) => {
                     
                     <div className="table-responsive">
                         {/* list of records */}
-                        {_userList(userList)}
+                        {(() => {
+                            if (!_.isEmpty(userList)) {
+                                return (
+                                    <Table tableHeaders={tableHeaders} tableBodyContent={_userListContent} />
+                                )
+                            } else if (_.isEmpty(users)) {
+                                return (
+                                    displayRecordNotFound('No User Records Found')
+                                )
+                            }
+                        })()}
 
                         {(total > per_page) ? 
                             <div className="pagination mb-3" style={{"justifyContent" : "right"}}>
@@ -165,5 +151,3 @@ const UserList = (props) => {
         </Fragment>
     )
 }
-
-export default UserList
