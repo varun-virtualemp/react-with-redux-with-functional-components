@@ -1,5 +1,4 @@
 export const DeleteButton = ({handleClick}) => {
-    {/* eslint-disable-next-line */}
     return(
         <a 
             className="ms-2" 
